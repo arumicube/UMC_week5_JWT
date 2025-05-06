@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -6,27 +6,49 @@ import LoginPage from './pages/LoginPage';
 import HomeLayout from './layouts/HomeLayout';
 import SignupPage from './pages/SignupPage';
 import { MyPage } from './pages/MyPage';
+import { AuthProvider } from './context/AuthContext';
+import ProtextedLayout from './layouts/ProtextedLayout';
 
 // 1. 홈페이지
 // 2. 로그인페이지
 // 3. 회원가입 페이지
 
-const router = createBrowserRouter([
+const publicRoutes:RouteObject[] = [
   {
-    path: "/",
+  path: "/",
     element: <HomeLayout />,
     errorElement: <NotFoundPage />,
     children: [
       {index:true , element: <HomePage />},
       {path: 'login', element: <LoginPage />},
       {path: 'signup', element: <SignupPage />},
-      {path:'my', element: <MyPage />},
-      ],
-    },
+],},
+];
+
+const privateRoutes:RouteObject[] = [
+  {
+    path: "/",
+    element: <ProtextedLayout />,
+    errorElement: <NotFoundPage  />,
+    children: [{
+      path: 'my', element: <MyPage />},
+    ],
+  },
+]
+
+const router = createBrowserRouter([
+  ...publicRoutes,
+  ...privateRoutes,
+  
   ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return(
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
+
+  );
 }
 
 export default App

@@ -1,11 +1,14 @@
-import { postSignin } from "../apis/auth";
 import useForm from "../hooks/useForm";
 import { UserSigninInformation, validateSignin } from "../utils/validate";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_KEY } from "../constants/key";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 const LoginPage = () => {
-  const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  const {login, accessToken} = useAuth();
+  //const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  //=> login 하면 알아서 authcontext에서 다 처리해주니까 필요없어짐
+
+ 
 
   const { values, errors, touched, getInputProps } = useForm<UserSigninInformation>({
     initialValues: {
@@ -16,7 +19,8 @@ const LoginPage = () => {
   });
 
   const handleSubmit = async () => {
-    console.log(values);
+    //얘도 Authconstext에서 처리하므로 필요없어짐짐
+    /*console.log(values);
     try {
       const response = await postSignin(values); // 서버에 로그인 요청
       setItem(response.data.accessToken); // accessToken 로컬스토리지 저장
@@ -28,7 +32,15 @@ const LoginPage = () => {
         console.error("Unknown error:", error);
         alert("로그인 중 알 수 없는 오류가 발생했습니다.");
       }
-    }
+    }*/
+       try {
+          await login(values);
+          window.location.href = "/my"; // 로그인 성공 시에만 이동!
+        } catch (error) {
+          alert("이메일 또는 비밀번호가 올바르지 않습니다.");
+        }
+      
+         
   };
 
   const isDisabled =
