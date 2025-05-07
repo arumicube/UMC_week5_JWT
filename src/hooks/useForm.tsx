@@ -2,10 +2,10 @@ import { ChangeEvent, useEffect, useState } from "react";
 
 interface UseFormProps<T>{
     initialValues: T; // {email: ''; password: '';}
-    validaite: (values: T) => Record<keyof T, string>; //값이 올바른지 검증하는 함수
+    validate: (values: T) => Record<keyof T, string>; //값이 올바른지 검증하는 함수
 }
 
-function useForm<T>({ initialValues, validaite }: UseFormProps<T>) {
+function useForm<T>({ initialValues, validate }: UseFormProps<T>) {
     const [values, setValues] = useState(initialValues); // {email: ''; password: ''}
     const [touched, setTouched] = useState<Record<string,boolean>>(); 
     // Record<string, boolean> : {email: true; password: false;} 처럼 키가 string이고 값이 boolean인 객체를 의미한다.
@@ -40,9 +40,9 @@ function useForm<T>({ initialValues, validaite }: UseFormProps<T>) {
 
     // 유효성 검사
     useEffect(() => {
-        const newErrors = validaite(values); // {email: '이메일 형식에 맞지 않습니다.'; password: ''}
+        const newErrors = validate(values); // {email: '이메일 형식에 맞지 않습니다.'; password: ''}
         setErrors(newErrors); //오류 메세지 업뎃
-    },[validaite, values]); // 유효성 검사 함수와 값이 바뀔 때마다 실행
+    },[validate, values]); // 유효성 검사 함수와 값이 바뀔 때마다 실행
     
     return {values, errors, getInputProps, touched};
 

@@ -8,22 +8,29 @@ import SignupPage from './pages/SignupPage';
 import { MyPage } from './pages/MyPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtextedLayout from './layouts/ProtextedLayout';
+import GoogleLoginRedirectPage from './pages/GoogleLoginRedirectPage';
+import { createElement } from 'react';
 
 // 1. 홈페이지
 // 2. 로그인페이지
 // 3. 회원가입 페이지
 
-const publicRoutes:RouteObject[] = [
+const publicRoutes: RouteObject[] = [
   {
-  path: "/",
+    path: "/",
     element: <HomeLayout />,
-    errorElement: <NotFoundPage />,
     children: [
-      {index:true , element: <HomePage />},
-      {path: 'login', element: <LoginPage />},
-      {path: 'signup', element: <SignupPage />},
-],},
+      { index: true, element: <HomePage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "signup", element: <SignupPage /> },
+    ],
+  },
+  {
+    path: "/v1/auth/google/callback",
+    element: createElement(GoogleLoginRedirectPage), // ✅ 이렇게 변경
+  },
 ];
+
 
 const privateRoutes:RouteObject[] = [
   {
