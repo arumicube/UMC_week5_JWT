@@ -7,7 +7,7 @@ import HomeLayout from './layouts/HomeLayout';
 import SignupPage from './pages/SignupPage';
 import { MyPage } from './pages/MyPage';
 import { AuthProvider } from './context/AuthContext';
-import ProtextedLayout from './layouts/ProtextedLayout';
+import ProtextedLayout from './layouts/ProtectedLayout';
 import GoogleLoginRedirectPage from './pages/GoogleLoginRedirectPage';
 import { createElement } from 'react';
 

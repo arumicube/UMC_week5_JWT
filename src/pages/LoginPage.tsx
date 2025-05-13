@@ -23,7 +23,7 @@ const LoginPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+    window.location.href = "http://localhost:8000/v1/auth/google/login";
   };
 
   const isDisabled =
